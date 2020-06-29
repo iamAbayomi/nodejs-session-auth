@@ -1,5 +1,5 @@
 function auth(req, res, next){
-    if(!req.signedCookies.user){
+    if(!req.session.user){
         var authHeader = req.headers.authorization;
         if(!authHeader){
         var err = new Error("Your are not authenticated");
@@ -16,9 +16,7 @@ function auth(req, res, next){
     var password = auth[1]
 
     if(username == 'admin' && password == 'p@ssword'){
-        res.cookie( 'user', 'admin', {
-            signed:true,
-        });
+        req.session.user = 'admin'
         next();
     }else{
         var err = new Error('Your are not authenticated')
@@ -28,7 +26,7 @@ function auth(req, res, next){
         next(err)
     }
   }else{
-      if(req.signedCookies.user == 'admin'){
+      if(req.session.user == 'admin'){
           next();
       }else{
           var err = new Error("You are not authenticated");
