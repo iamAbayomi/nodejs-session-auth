@@ -4,12 +4,14 @@ const morgan = require('morgan');
 const app = express();
 const auth = require('./auth');
 
-const cookieParser = require('cookie-parser')
+// const cookierParser = require('cookie-parser')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
 
 
 
 app.use(morgan('dev'));
-app.use(cookieParser('abcdef-12345'))
+//app.use(cookieParser('abcdef-12345'))
 
 app.use(session({
     name:'session-id',
